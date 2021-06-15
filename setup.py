@@ -4,10 +4,10 @@ setup(
       name='komle',
       version='0.3',
       description='A python library to help with WITSML v1.4.1.1 and v2.0',
-      url='https://github.com/kle043/komle',
+      url='https://github.com/renrawse/komle',
       packages=find_packages(exclude=('tests',)),
-      author='kle043',
-      author_email='pale.dorg@gmail.com',
+      author='renrawse',
+      author_email='',
       include_package_data=True,
       package_data={
                     'komle': ['WMLS.WSDL', 'witsmlUnitDict.xml'],
