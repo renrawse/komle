@@ -2,9 +2,10 @@ import os
 import requests
 import sys
 from suds.client import Client
-from suds.transport.http import HttpAuthenticated
+from suds.transport.https import HttpAuthenticated
 from suds.transport import Reply
 from typing import Union
+from lxml import etree
 
 if 'komle.bindings.v1411.write' in sys.modules:
     # Witsml uses the same namespace for each schema
@@ -66,8 +67,15 @@ class StoreException(Exception):
         self.reply = reply
 
 def _parse_reply(reply):
-    if reply.Result == 1:
-        return witsml.CreateFromDocument(reply.XMLout)
+    if reply.Result >= 1:
+        tree = etree.XML(reply.XMLout)
+        for not_witsml in tree.xpath("//*[starts-with(name(), 'startDateTime')]"):
+            not_witsml.getparent().remove(not_witsml)
+        for not_witsml in tree.xpath("//*[starts-with(name(), 'endDateTime')]"):
+            not_witsml.getparent().remove(not_witsml)
+        for not_witsml in tree.xpath("//*[starts-with(name(), 'creationDate')]"):
+            not_witsml.getparent().remove(not_witsml)
+        return witsml.CreateFromDocument(etree.tostring(tree))
     else:
         raise StoreException(reply)
 
