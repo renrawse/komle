@@ -5,7 +5,7 @@ setup(
       version='0.3',
       description='A python library to help with WITSML v1.4.1.1 and v2.0',
       url='https://github.com/renrawse/komle',
-      packages=find_packages(exclude=('tests',)),
+#       packages=find_packages(exclude=('tests',)),
       author='renrawse',
       author_email='',
       include_package_data=True,
