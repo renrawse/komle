@@ -54,7 +54,7 @@ def logdata_dict(log: 'witsml.obj_log', fill_missing: bool=True) -> Dict[str, Li
     # The default delimiter is , 
     delimiter = ',' if log.dataDelimiter is None else log.dataDelimiter
     
-    data_list = [(mnem, mnem_cast_map[mnem], []) for mnem in log.logData[0].mnemonicList.split(delimiter)]
+    data_list = [(mnem.rstrip(), mnem_cast_map[mnem.rstrip()], []) for mnem in log.logData[0].mnemonicList.split(delimiter)]
 
     for data_str in log.logData[0].data:
         for i, point_str in enumerate(data_str.split(delimiter)):
